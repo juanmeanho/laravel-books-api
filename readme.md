@@ -482,4 +482,4 @@ Respuesta
 **Headers: Authorization: Bearer <token>**
 
 - **GET** `/api/export/authors` - Exportar todos los autores
-- **GET** `api/export/books` - Exportar todos los libros
+- **GET** `/api/export/books` - Exportar todos los libros
