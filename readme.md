@@ -1,72 +1,469 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# 📘 Laravel Books API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+API REST desarrollada en Laravel 5.8.
 
-## About Laravel
+El proyecto implementa autenticación JWT, módulos de usuarios, autores y libros con operaciones CRUD, exportación de datos en formato Excel (XLSX) y un proceso asíncrono para mantener actualizada la cantidad de libros por autor.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🧰 Tecnologías
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 7.3+
+- Laravel 5.8
+- SQLite
+- JWT (auth:api)
+- Laravel Excel (exportación XLSX)
+- Events, Listeners y Jobs
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📁 Requisitos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP >= 7.3
+- Composer
+- SQLite habilitado
+- Extensiones PHP: pdo, pdo_sqlite, openssl
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## 🚀 Instalación
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
+- Clonar el repositorio
+```bash
+git clone https://github.com/tu_usuario/laravel-books-api.git
+```
 
-## Contributing
+- Entrar al directorio
+```bash
+cd laravel-books-api
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+composer install
+```
+- Crear el arcivo .env
+```bash
+cp .env.example .env
+```
 
-## Security Vulnerabilities
+- Crear base de datos SQLite
+```bash
+touch database/database.sqlite
+```
+- Agregar a .env
+```bash
+DB_CONNECTION=sqlite
+DB_DATABASE=database/database.sqlite
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Generar la clave de la aplicación:
+```bash
+php artisan key:generate
+```
 
-## License
+- Ejecutar las migraciones
+```bash
+php artisan migrate
+```
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Iniciar servidor
+```bash
+php artisan serve
+```
+---
+# 📘 Laravel Books API – Documentación API
+
+La API utiliza **JWT** para autenticar las rutas protegidas.  
+Todas las rutas protegidas requieren el token:
+
+
+## 🔑 Autenticación
+
+### Registro de usuario
+
+**POST** `/api/register`
+
+**Body (JSON):**
+```json
+{
+  "name": "Pedro Perez",
+  "email": "pedro@example.com",
+  "password": "123456"
+}
+```
+Respuesta
+```json
+{
+  "message": "Usuario registrado exitosamente",
+  "user": {
+    "id": 1,
+    "name": "Pedro Perez",
+    "email": "pedro@example.com",
+    "created_at": "2026-02-04T14:00:00"
+  }
+}
+```
+
+### Login de usuario
+
+**POST** `/api/login`
+
+**Body (JSON):**
+```json
+{
+  "email": "pedro@example.com",
+  "password": "123456"
+}
+```
+Respuesta
+```json
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}
+```
+### Perfil de usuario
+
+**GET** `/api/me`
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+
+Respuesta
+```json
+{
+    "id": 14,
+    "name": "Juan Pedro",
+    "email": "juanpedro@test.com",
+    "email_verified_at": null,
+    "created_at": "2026-02-04 19:09:09",
+    "updated_at": "2026-02-04 19:09:09"
+}
+```
+
+### Logout
+
+**POST** `/api/logout`
+
+**Headers: Authorization: Bearer <token>**
+
+```json
+{
+    "message": "Usuario desconectado"
+}
+```
+### Usuarios
+
+
+## 📡 API Endpoints - Usuarios
+
+- **GET** `/api/users` - Listar todos los usuarios
+- **GET** `/api/users/{id}` - Ver detalle de un usuario
+- **POST** `/api/users` - Crear un nuevo usuario
+- **PUT** `/api/users/{id}` - Actualizar un usuario
+- **DELETE** `/api/users/{id}` - Eliminar un usuario
+
+
+
+**GET** `/api/users` - Listar Usuarios
+
+**Headers: Authorization: Bearer <token>**
+
+**Respuesta:**
+
+```json
+{
+    "id": 1,
+    "name": "Pedro Manuel",
+    "email": "pedromanuel@test.com",
+    "email_verified_at": null,
+    "created_at": "2026-02-04 19:09:09",
+    "updated_at": "2026-02-04 19:09:09"
+}
+{
+    "id": 14,
+    "name": "Juan Pedro",
+    "email": "juanpedro@test.com",
+    "email_verified_at": null,
+    "created_at": "2026-02-04 19:09:09",
+    "updated_at": "2026-02-04 19:09:09"
+}
+```
+**GET** `/api/users/{id}` - Ver detalle de un usuario
+
+**Headers: Authorization: Bearer <token>**
+
+**Respuesta:**
+```json
+{
+    "id": 14,
+    "name": "Juan Pedro",
+    "email": "juanpedro@test.com",
+    "email_verified_at": null,
+    "created_at": "2026-02-04 19:09:09",
+    "updated_at": "2026-02-04 19:09:09"
+}
+```
+**POST** `/api/users` - Crear un usuario
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+```json
+{
+  "email": "pedro@example.com",
+  "name": "Pedro Example",
+  "password": "123456"
+}
+```
+Respuesta
+```json
+{
+    "name": "Pedro Example",
+    "email": "pedro@example.com",
+    "updated_at": "2026-02-04 19:42:06",
+    "created_at": "2026-02-04 19:42:06",
+    "id": 15
+}
+```
+**PUT** `/api/users/{id}` - Actualizar un usuario
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+```json
+{
+  "name": "Pedro Pérez Actualizado",
+  "email": "pedro.actualizado@example.com",
+  "password": "nuevo123"   // opcional, solo si deseas cambiarla
+}
+```
+Respuesta
+```json
+{
+  "id": 2,
+  "name": "Pedro Pérez Actualizado",
+  "email": "pedro.actualizado@example.com",
+  "updated_at": "2026-02-04T17:00:00"
+}
+
+```
+**DELETE** `/api/users/{id}` - Borrar un usuario
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+
+Respuesta
+```json
+{
+    "message": "Usuario eliminado correctamente"
+}
+```
+
+## 📡 API Endpoints - Autores
+
+- **GET** `/api/authors` - Listar todos los autores
+- **GET** `/api/authors/{id}` - Ver detalle de un autor
+- **POST** `/api/authors` - Crear un nuevo autor
+- **PUT** `/api/authors/{id}` - Actualizar un autor
+- **DELETE** `/api/authors/{id}` - Eliminar un autor
+
+---
+
+**GET** `/api/authors` - Listar Autores
+
+**Headers:** Authorization: Bearer <token>
+
+**Respuesta:**
+```json
+[
+  {
+    "id": 1,
+    "name": "Gabriel García Márquez",
+    "books_count": 3,
+    "created_at": "2026-02-04 18:00:00",
+    "updated_at": "2026-02-04 18:00:00"
+  },
+  {
+    "id": 2,
+    "name": "Isabel Allende",
+    "books_count": 2,
+    "created_at": "2026-02-04 18:10:00",
+    "updated_at": "2026-02-04 18:10:00"
+  }
+]
+```
+**GET** `/api/authors/{id}` - Ver detalle de un autor
+
+**Headers: Authorization: Bearer <token>**
+
+**Respuesta:**
+```json
+{
+  "id": 1,
+  "name": "Gabriel García Márquez",
+  "books_count": 3,
+  "created_at": "2026-02-04 18:00:00",
+  "updated_at": "2026-02-04 18:00:00"
+}
+
+```
+**POST** `/api/authors` - Crear un Autor
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+```json
+{
+  "name": "J.K. Rowling"
+}
+
+```
+Respuesta
+```json
+{
+  "id": 3,
+  "name": "J.K. Rowling",
+  "books_count": 0,
+  "created_at": "2026-02-04 18:30:00",
+  "updated_at": "2026-02-04 18:30:00"
+}
+
+```
+**PUT** `/api/authors/{id}` - Actualizar un autor
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+```json
+{
+  "name": "Gabriel G. Márquez"
+}
+```
+Respuesta
+```json
+{
+  "id": 1,
+  "name": "Gabriel G. Márquez",
+  "books_count": 3,
+  "updated_at": "2026-02-04 18:45:00"
+}
+
+
+```
+**DELETE** `/api/authors/{id}` - Borrar un autor
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+
+Respuesta
+```json
+{
+    "message": "Autor eliminado correctamente"
+}
+```
+
+## 📡 API Endpoints - Libros
+
+- **GET** `/api/books` - Listar todos los libros
+- **GET** `/api/books/{id}` - Ver detalle de un libro
+- **POST** `/api/books` - Crear un nuevo libro
+- **PUT** `/api/books/{id}` - Actualizar un libro
+- **DELETE** `/api/books/{id}` - Eliminar un libro
+
+---
+
+**GET** `/api/books` - Listar Libros
+
+**Headers:** Authorization: Bearer <token>
+
+**Respuesta:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Cien años de soledad",
+    "author_id": 1,
+    "author_name": "Gabriel García Márquez",
+    "created_at": "2026-02-04 18:00:00",
+    "updated_at": "2026-02-04 18:00:00"
+  },
+  {
+    "id": 2,
+    "title": "La casa de los espíritus",
+    "author_id": 2,
+    "author_name": "Isabel Allende",
+    "created_at": "2026-02-04 18:10:00",
+    "updated_at": "2026-02-04 18:10:00"
+  }
+]
+
+```
+**GET** `/api/books/{id}` - Ver detalle de un libro
+
+**Headers: Authorization: Bearer <token>**
+
+**Respuesta:**
+```json
+{
+  "id": 1,
+  "title": "Cien años de soledad",
+  "author_id": 1,
+  "author_name": "Gabriel García Márquez",
+  "created_at": "2026-02-04 18:00:00",
+  "updated_at": "2026-02-04 18:00:00"
+}
+```
+**POST** `/api/books` - Crear un libro
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+```json
+{
+  "title": "Harry Potter y la piedra filosofal",
+  "author_id": 3
+}
+```
+Respuesta
+```json
+{
+  "id": 3,
+  "title": "Harry Potter y la piedra filosofal",
+  "author_id": 3,
+  "created_at": "2026-02-04 18:30:00",
+  "updated_at": "2026-02-04 18:30:00"
+}
+```
+**PUT** `/api/books/{id}` - Actualizar un libro
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+```json
+{
+  "title": "Cien años de soledad - Edición Especial",
+  "author_id": 1
+}
+```
+Respuesta
+```json
+{
+  "id": 1,
+  "title": "Cien años de soledad - Edición Especial",
+  "author_id": 1,
+  "updated_at": "2026-02-04 18:45:00"
+}
+```
+**DELETE** `/api/books/{id}` - Borrar un libro
+
+**Headers: Authorization: Bearer <token>**
+
+**Body (JSON):**
+
+Respuesta
+```json
+{
+    "message": "Libro eliminado correctamente"
+}
+```
