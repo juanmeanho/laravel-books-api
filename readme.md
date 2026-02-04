@@ -30,7 +30,7 @@ El proyecto implementa autenticación JWT, módulos de usuarios, autores y libro
 
 - Clonar el repositorio
 ```bash
-git clone https://github.com/tu_usuario/laravel-books-api.git
+git clone https://github.com/juanmeanho/laravel-books-api.git
 ```
 
 - Entrar al directorio
@@ -51,12 +51,22 @@ touch database/database.sqlite
 - Agregar a .env
 ```bash
 DB_CONNECTION=sqlite
-DB_DATABASE=database/database.sqlite
+DB_DATABASE=/ruta_absoluta/al/proyecto/database/database.sqlite
 ```
 
 - Generar la clave de la aplicación:
 ```bash
 php artisan key:generate
+```
+
+- Genera el JWT secret y agregar a ,env:
+```bash
+php artisan jwt:secret
+wt-auth secret [tuI7ft44gr.....9rhSYZ1sj95dSj0cDDk] set successfully.
+```
+- En .env
+```bash
+JWT_SECRET=tuI7ft44gr.....9rhSYZ1sj95dSj0cDDk
 ```
 
 - Ejecutar las migraciones
