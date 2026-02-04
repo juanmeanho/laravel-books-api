@@ -44,11 +44,17 @@ class BookController extends Controller
             'author_id' => 'required|exists:authors,id'
         ]);
 
-        $book = Book::create($request->all());
-        
+        $book = Book::create([
+            'title' => $request->title,
+            'author_id' => $request->author_id
+        ]);
+
         event(new BookCreated($book));
 
-        return redirect()->route('books.index')->with('success', 'Libro creado.');
+        return response()->json([
+            'message' => 'Libro creado exitosamente',
+            'book' => $book
+        ], 201);
     }
 
     public function editView($id)
@@ -86,10 +92,10 @@ class BookController extends Controller
                 $newAuthor->increment('books_count');
             }
         }
-
         return response()->json([
-            'message' => 'Libro actualizado correctamente'
-        ]);
+            'message' => 'Libro creado exitosamente',
+            'book' => $book
+        ], 201);
     }
 
     public function destroy($id)

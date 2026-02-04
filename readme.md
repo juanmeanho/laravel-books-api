@@ -331,11 +331,13 @@ Respuesta
 Respuesta
 ```json
 {
-  "id": 3,
-  "name": "J.K. Rowling",
-  "books_count": 0,
-  "created_at": "2026-02-04 18:30:00",
-  "updated_at": "2026-02-04 18:30:00"
+    "message": "Autor creado exitosamente",
+    "author": {
+        "name": "J.K. Rowling",
+        "updated_at": "2026-02-04 21:50:21",
+        "created_at": "2026-02-04 21:50:21",
+        "id": 16
+    }
 }
 
 ```
@@ -346,19 +348,21 @@ Respuesta
 **Body (JSON):**
 ```json
 {
-  "name": "Gabriel G. Márquez"
+  "name": "JK Rowling"
 }
 ```
 Respuesta
 ```json
 {
-  "id": 1,
-  "name": "Gabriel G. Márquez",
-  "books_count": 3,
-  "updated_at": "2026-02-04 18:45:00"
+    "message": "Autor actualizado",
+    "author": {
+        "id": 16,
+        "name": "JK Rowling Nuevo",
+        "books_count": "0",
+        "created_at": "2026-02-04 21:50:21",
+        "updated_at": "2026-02-04 21:54:30"
+    }
 }
-
-
 ```
 **DELETE** `/api/authors/{id}` - Borrar un autor
 
@@ -369,7 +373,8 @@ Respuesta
 Respuesta
 ```json
 {
-    "message": "Autor eliminado correctamente"
+    "success": true,
+    "message": "Autor eliminado correctamente."
 }
 ```
 
@@ -394,7 +399,6 @@ Respuesta
     "id": 1,
     "title": "Cien años de soledad",
     "author_id": 1,
-    "author_name": "Gabriel García Márquez",
     "created_at": "2026-02-04 18:00:00",
     "updated_at": "2026-02-04 18:00:00"
   },
@@ -402,7 +406,6 @@ Respuesta
     "id": 2,
     "title": "La casa de los espíritus",
     "author_id": 2,
-    "author_name": "Isabel Allende",
     "created_at": "2026-02-04 18:10:00",
     "updated_at": "2026-02-04 18:10:00"
   }
@@ -419,7 +422,6 @@ Respuesta
   "id": 1,
   "title": "Cien años de soledad",
   "author_id": 1,
-  "author_name": "Gabriel García Márquez",
   "created_at": "2026-02-04 18:00:00",
   "updated_at": "2026-02-04 18:00:00"
 }
@@ -438,11 +440,14 @@ Respuesta
 Respuesta
 ```json
 {
-  "id": 3,
-  "title": "Harry Potter y la piedra filosofal",
-  "author_id": 3,
-  "created_at": "2026-02-04 18:30:00",
-  "updated_at": "2026-02-04 18:30:00"
+    "message": "Libro creado exitosamente",
+    "book": {
+        "title": "Harry Potter y la piedra filosofal",
+        "author_id": 1,
+        "updated_at": "2026-02-04 22:02:38",
+        "created_at": "2026-02-04 22:02:38",
+        "id": 17
+    }
 }
 ```
 **PUT** `/api/books/{id}` - Actualizar un libro
@@ -452,17 +457,21 @@ Respuesta
 **Body (JSON):**
 ```json
 {
-  "title": "Cien años de soledad - Edición Especial",
+  "title": "Cien años de soledad - Edición Especial.",
   "author_id": 1
 }
 ```
 Respuesta
 ```json
 {
-  "id": 1,
-  "title": "Cien años de soledad - Edición Especial",
-  "author_id": 1,
-  "updated_at": "2026-02-04 18:45:00"
+    "message": "Libro creado exitosamente",
+    "book": {
+        "id": 4,
+        "title": "Cien años de soledad - Edición Especial.",
+        "author_id": 1,
+        "created_at": "2026-02-04 12:16:54",
+        "updated_at": "2026-02-04 22:04:48"
+    }
 }
 ```
 **DELETE** `/api/books/{id}` - Borrar un libro
@@ -474,7 +483,8 @@ Respuesta
 Respuesta
 ```json
 {
-    "message": "Libro eliminado correctamente"
+    "success": true,
+    "message": "Libro eliminado correctamente."
 }
 ```
 ## 📡 API Endpoints - Exportar Libros y Autores a xls.
