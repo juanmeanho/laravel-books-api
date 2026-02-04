@@ -477,3 +477,9 @@ Respuesta
     "message": "Libro eliminado correctamente"
 }
 ```
+## 📡 API Endpoints - Exportar Libros y Autores a xls.
+
+**Headers: Authorization: Bearer <token>**
+
+- **GET** `/api/export/authors` - Exportar todos los autores
+- **GET** `api/export/books` - Exportar todos los libros
