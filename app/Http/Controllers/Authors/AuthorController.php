@@ -36,9 +36,18 @@ class AuthorController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required|string|max:255']);
-        $author = Author::create($request->all());
-        return redirect()->route('authors.index')->with('success', 'Autor creado.');
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $author = Author::create([
+            'name' => $request->name
+        ]);
+
+        return response()->json([
+            'message' => 'Autor creado exitosamente',
+            'author' => $author
+        ], 201); 
     }
 
     public function editView($id)
@@ -57,7 +66,8 @@ class AuthorController extends Controller
         $author->update($request->only('name'));
 
         return response()->json([
-            'message' => 'Autor actualizado'
+            'message' => 'Autor actualizado',
+            'author' => $author
         ]);
     }
 
